@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Тапалка Темы</title>
+  <style>
+    * {
+      text-align: center;
+      cursor: pointer;
+      font-family: 'Gerhaus', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 100%;
+    }
+    #button {
+      max-height: 375px;
+      min-width: 375px;
+      border-radius: 200px;
+      border: 5px solid #000;
+      transition: transform 0.1s ease, opacity 0.5s ease;
+    }
+    .shrink {
+      transform: scale(0.9);
+    }
+    p {
+      font-size: 30px;
+    }
+    #container {
+      display: none;
+      padding-top: 150px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    #container.visible {
+      display: block;
+      opacity: 1;
+    }
+    h1 {
+      padding-top: 350px;
+      transition: padding-top 0.5s ease;
+    }
+    .move-up {
+      padding-top: 20px !important;
+    }
+    #button2 {
+      position: relative;
+      border-radius: 5px;
+      width: 205px;
+      color: #fff;
+      background-color: #000;
+      border: none;
+      font-size: 16px;
+      padding: 10px 0;
+      transition: opacity 0.5s ease;
+      z-index: 1;
+    }
+    #button2::before {
+      content: '';
+      position: absolute;
+      top: -3px; left: -3px; right: -3px; bottom: -3px;
+      border-radius: 12px;
+      background: linear-gradient(45deg, #7732a8, #db16db);
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      z-index: -1;
+    }
+    #button2:hover::before {
+      opacity: 1;
+    }
+    #button2.hidden {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+    .glow-on-hover {
+      width: 220px;
+      height: 50px;
+      border-radius: 10px;
+      background: #000;
+      color: #fff;
+      position: relative;
+      z-index: 0;
+      border: none;
+      outline: none;
+    }
+    .glow-on-hover::before {
+      content: '';
+      position: absolute;
+      top: -2px; left: -2px;
+      width: calc(100% + 4px);
+      height: calc(100% + 4px);
+      background: linear-gradient(45deg, #7732a8, #db16db, #1658db);
+      background-size: 400%;
+      filter: blur(5px);
+      z-index: -1;
+      border-radius: 10px;
+      animation: glowing 20s linear infinite;
+      opacity: 0;
+      transition: 0.3s ease-in-out;
+    }
+    .glow-on-hover:hover::before {
+      opacity: .7;
+    }
+    @keyframes glowing {
+      0% { background-position: 0 0; }
+      50% { background-position: 400% 0; }
+      100% { background-position: 0 0; }
+    }
+    #strela {
+      padding-top: 150px;
+      font-size: 40px;
+      background: none;
+      border: none;
+      display: none;
+      height: 50px;
+    }
+    #magasin {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      padding-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #magasin.visible {
+      opacity: 1;
+    }
+    #strelaww {
+      display: none;
+      margin-top: 20px;
+      font-size: 40px;
+      background: none;
+      border: none;
+    }
+    #magasin h1 {
+      margin-top: 0;
+      padding-top: 0;
+      text-align: center;
+    }
+    #sadol {
+      margin-top: 80px;
+    }
+    .x2 {
+      background: linear-gradient(#5d1cad, #cc06b8);
+      max-width: 250px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+      border-radius: 15px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .ww {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    .divider {
+      width: 80%;
+      height: 2px;
+      background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.7), rgba(255,255,255,0));
+      border: none;
+      margin: 10px 0;
+    }
+    .boost {
+      padding: 10px;
+      width: 200px;
+      background-color: #222;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    #sadol {
+      margin-top: 200px;
+    }
+    .towar {
+      padding-bottom: 50px;
+      margin-top: 35px;
+    }
+    .section-divider {
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(to right, #db16db, #7732a8);
+      margin: 0;
+      border: none;
+    }
+    #loginForm {
+      display: block;
+      margin-top: 100px;
+    }
+    #loginForm input {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+      width: 200px;
+    }
+    #loginForm button {
+      padding: 10px 20px;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    #levelDisplay {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="ekran1">
+  <h1 id="title">Тапалка Темы</h1>
+  <div id="loginForm">
+    <input type="text" id="username" placeholder="Введите имя" />
+    <button onclick="login()">Войти</button>
+  </div>
+  <button id="button2" onclick="startGame()" class="glow-on-hover">приступить к тапанью</button>
+  <div id="container">
+    <img src="temik.jpg" id="button" alt="Tap here" />
+    <p id="idk">0</p>
+  </div>
+  <button id="strela" onclick="openShop()">⬇️</button>
+  <div id="levelDisplay"></div>
+</div>
+
+<div id="magasin">
+  <button id="strelaww" onclick="closeShop()">⬆️</button>
+  <h1 id="sadol" style="font-size: 70px;">Добро пожаловать в магазин!</h1>
+  <div class="section-divider"></div>
+  <h2 style='font-size: 40px;' class="towar">Товары:</h2>
+  <div class="x2">
+    <span class="ww">x2 тап</span>
+    <hr class="divider">
+    <button class="boost" onclick="buyBoost()">50 очков</button>
+  </div>
+</div>
+
+<script>
+  let count = 0;
+  let clickMultiplier = 1;
+  let gameWon = false;
+  let username = '';
+  
+  let level = 0;
+  let levelProgress = 0;
+  let levelGoal = getLevelGoal(level);
+
+  const el = document.getElementById('button');
+  const counterEl = document.getElementById('idk');
+
+  function getLevelGoal(level) {
+    if (level === 0) return 50;
+    if (level === 1) return 100;
+    if (level === 2) return 500;
+    return 500; // После уровня 2, требуется 500 очков для следующего уровня
+  }
+
+  function updateLevelDisplay() {
+    document.getElementById('levelDisplay').textContent =
+      `Уровень ${level + 1} (${levelProgress} / ${levelGoal})`;
+  }
+
+  updateLevelDisplay();
+
+  function saveGame() {
+    localStorage.setItem(username + '_count', count);
+    localStorage.setItem(username + '_clickMultiplier', clickMultiplier);
+    localStorage.setItem(username + '_gameWon', gameWon);
+    localStorage.setItem(username + '_level', level);
+    localStorage.setItem(username + '_levelProgress', levelProgress);
+  }
+
+  function loadGame() {
+    count = parseInt(localStorage.getItem(username + '_count') || 0);
+    clickMultiplier = parseInt(localStorage.getItem(username + '_clickMultiplier') || 1);
+    gameWon = JSON.parse(localStorage.getItem(username + '_gameWon') || 'false');
+    level = parseInt(localStorage.getItem(username + '_level') || 0);
+    levelProgress = parseInt(localStorage.getItem(username + '_levelProgress') || 0);
+  }
+
+  function login() {
+    username = document.getElementById('username').value.trim();
+    if (username) {
+      document.getElementById('loginForm').style.display = 'none';
+      loadGame();
+      startGame();
+    } else {
+      alert('Пожалуйста, введите имя');
+    }
+  }
+
+  function startGame() {
+    document.getElementById('container').classList.add('visible');
+    document.getElementById('strela').style.display = 'inline-block';
+    document.getElementById('title').classList.add('move-up');
+    const btn = document.getElementById('button2');
+    btn.style.opacity = 0;
+    setTimeout(() => btn.classList.add('hidden'), 500);
+  }
+
+  function openShop() {
+    const ekran1 = document.getElementById('ekran1');
+    const magasin = document.getElementById('magasin');
+    ekran1.style.opacity = '0';
+    setTimeout(() => {
+      ekran1.style.display = 'none';
+      magasin.style.display = 'block';
+      setTimeout(() => magasin.style.opacity = '1', 50);
+      document.getElementById('strelaww').style.display = 'inline-block';
+    }, 500);
+  }
+
+  function closeShop() {
+    const ekran1 = document.getElementById('ekran1');
+    const magasin = document.getElementById('magasin');
+    magasin.style.opacity = '0';
+    setTimeout(() => {
+      magasin.style.display = 'none';
+      ekran1.style.display = 'block';
+      setTimeout(() => ekran1.style.opacity = '1', 50);
+      document.getElementById('strelaww').style.display = 'none';
+    }, 500);
+  }
+
+  el.addEventListener('click', () => {
+    count += clickMultiplier;
+    levelProgress += clickMultiplier;
+
+    if (!gameWon && count >= 100 && count <= 105) {
+      gameWon = true;
+      counterEl.textContent = 'победа';
+      el.style.opacity = 0;
+      setTimeout(() => {
+        el.src = 'temik2.jpg';
+        el.style.opacity = 1;
+      }, 500);
+    } else {
+      counterEl.textContent = count;
+    }
+
+    if (levelProgress >= levelGoal) {
+      level++;
+      levelProgress = 0;
+      levelGoal = getLevelGoal(level);
+    }
+
+    updateLevelDisplay();
+
+    el.classList.add('shrink');
+    setTimeout(() => el.classList.remove('shrink'), 100);
+
+    saveGame();
+  });
+
+  function buyBoost() {
+    const xtap = document.querySelector('.boost');
+    if (clickMultiplier > 1) {
+      alert('Буст уже куплен!');
+      return;
+    }
+    if (count >= 50) {
+      count -= 50;
+      clickMultiplier = 2;
+      counterEl.textContent = count;
+      alert('Успешно куплен x2 Тап!');
+      xtap.innerText = 'Продано!';
+    } else {
+      alert('Недостаточно очков!');
+    }
+
+    saveGame();
+  }
+
+  updateLevelDisplay();
+</script>
+
+</body>
+</html>
